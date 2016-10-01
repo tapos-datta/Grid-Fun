@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="647.0" prefWidth="772.0" stylesheets="@Home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.HomeController">
+   <children>
+      <Label id="welcome" alignment="CENTER_RIGHT" layoutX="152.0" layoutY="41.0" prefHeight="93.0" prefWidth="216.0" text="Welcome" textFill="#00ff88">
+         <font>
+            <Font name="System Bold Italic" size="48.0" />
+         </font>
+      </Label>
+      <Label id="welcome" fx:id="playerName" layoutX="386.0" layoutY="41.0" prefHeight="93.0" prefWidth="285.0" text="Tapos Datta" textFill="#08ff93">
+         <font>
+            <Font name="System Bold Italic" size="48.0" />
+         </font>
+      </Label>
+      <Button id="common" fx:id="play" layoutX="292.0" layoutY="198.0" mnemonicParsing="false" onAction="#playAction" prefHeight="57.0" prefWidth="157.0" text="Play" textFill="#0a0a0a" />
+      <Button id="common" fx:id="help" layoutX="294.0" layoutY="332.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="157.0" text="Help" />
+      <Button id="common" fx:id="exit" layoutX="294.0" layoutY="464.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="157.0" text="Exit" />
+   </children>
+</AnchorPane>

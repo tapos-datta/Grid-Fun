@@ -1,0 +1,45 @@
+#design{
+    -fx-background-image:url("design.jpg"); 
+    -fx-background-position:center ;
+   
+}
+#outer{
+    -fx-background-image:url("design.jpg"); 
+    -fx-border-color: brown;
+    -fx-background-position: left center ;
+}
+#heading{
+    -fx-background-image:url("orangeColor.jpg"); 
+    -fx-background-position:center ;
+    -fx-border-color: brown;
+    -fx-border-style: solid;
+    -fx-border-width: 3px;
+    
+}
+#grid{
+    -fx-effect:dropshadow( gaussian  ,#A9A9A9  , 0,0,4,0 )
+}
+#connectionButton{
+    -fx-padding: 12 15 10 10;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 25;
+     -fx-cursor:hand;
+    -fx-background-color:#ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.6em;
+}
+#name{
+    -fx-background-radius: 25;
+    -fx-background-color:#ffffff;
+    -fx-font-weight: bold;
+    -fx-padding: 12 15 10 10;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-font-size: 1.1em;
+}
+#enter{
+    -fx-background-radius: 25;
+    -fx-background-color:#ffffff;
+    -fx-cursor:hand;
+    -fx-padding: 12 15 10 10;
+    -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+}

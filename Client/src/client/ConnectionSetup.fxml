@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="outer" prefHeight="630.0" prefWidth="803.0" stylesheets="@connection.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ConnectionSetupController">
+   <children>
+      <Button id="connectionButton" fx:id="createConnection" alignment="CENTER" layoutX="528.0" layoutY="207.0" mnemonicParsing="false" onAction="#connectAction" prefHeight="49.0" prefWidth="210.0" text="Create Connection">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font>
+      </Button>
+      <Button id="enter" fx:id="enter" layoutX="528.0" layoutY="365.0" mnemonicParsing="false" onAction="#enterAction" prefHeight="50.0" prefWidth="210.0" text="Enter">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+      <TextField id="name" fx:id="playername" layoutX="528.0" layoutY="290.0" prefHeight="36.0" prefWidth="210.0" promptText="Player Name">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
+      <Pane id="design" layoutY="437.0" prefHeight="191.0" prefWidth="812.0" stylesheets="@connection.css" />
+      <Pane id="design" layoutY="-4.0" prefHeight="191.0" prefWidth="812.0" stylesheets="@connection.css" />
+      <AnchorPane id="heading" layoutY="187.0" prefHeight="251.0" prefWidth="496.0" stylesheets="@connection.css">
+         <children>
+            <Label id="grid" layoutX="114.0" layoutY="29.0" prefHeight="105.0" prefWidth="151.0" stylesheets="@connection.css" text="Grid" textFill="#510c46">
+               <font>
+                  <Font name="System Bold Italic" size="72.0" />
+               </font>
+            </Label>
+            <Label id="grid" layoutX="230.0" layoutY="93.0" prefHeight="105.0" prefWidth="134.0" text="Fun" textFill="#4d0d4c">
+               <font>
+                  <Font name="System Bold Italic" size="72.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@Home.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="server.HomeController">
+   <children>
+      <Button id="start" fx:id="run" layoutX="118.0" layoutY="108.0" mnemonicParsing="false" onAction="#runAction" prefHeight="35.0" prefWidth="86.0" text="Run">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font></Button>
+      <TextArea id="console" fx:id="console" layoutX="16.0" layoutY="186.0" prefHeight="200.0" prefWidth="568.0" />
+      <Button id="stop" fx:id="stop" layoutX="363.0" layoutY="110.0" mnemonicParsing="false" onAction="#stopAction" prefHeight="39.0" prefWidth="86.0" text="Stop">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
