@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="648.0" prefWidth="772.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ResultController">
+    <stylesheets>
+        <URL value="@result.css" />
+    </stylesheets>
+   <children>
+      <TextArea id="resultBoard" fx:id="resultBoard" layoutX="125.0" layoutY="102.0" prefHeight="525.0" prefWidth="648.0" stylesheets="@result.css">
+         <font>
+            <Font name="System Bold Italic" size="34.0" />
+         </font>
+      </TextArea>
+      <Label fx:id="resultLabel" alignment="CENTER" layoutX="312.0" layoutY="39.0" prefHeight="43.0" prefWidth="167.0" text="Results" textFill="#a82f2f">
+         <font>
+            <Font name="System Bold Italic" size="48.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

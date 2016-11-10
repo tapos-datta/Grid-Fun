@@ -6,8 +6,11 @@
 package client;
 
 import static client.ConnectionSetupController.playerId;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -60,6 +63,27 @@ public class HomeController implements Initializable,ControlledScreen {
         
          System.out.println("PlayerName :" + PlayerInfo.playerName);
          
+    }
+    @FXML
+    public void helpAction(ActionEvent e){
+        
+         homeScreen.loadScreen(Client.screen5ID, Client.screen5file);    //load the result screen
+         homeScreen.setScreen(Client.screen5ID);
+        
+    }
+    
+    @FXML
+    public void exitAction(ActionEvent e){
+        
+        if(ConnectionSetupController.s1!=null){
+            try {
+                ConnectionSetupController.s1.close();
+                ConnectionSetupController.s1=null;
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }
     
     @Override

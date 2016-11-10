@@ -8,6 +8,7 @@ package client;
 import static client.HomeController.homeScreen;
 import static client.PlayingController.maxCol;
 import static client.PlayingController.maxRow;
+import static client.PlayingController.playingScreen;
 import com.sun.media.jfxmedia.events.PlayerEvent;
 import common.CommunicateObject;
 import java.awt.image.BufferedImage;
@@ -97,11 +98,37 @@ class EchoThread extends Thread {
                 
                 if((int) response[0]==5){
                     
-                    for(int i=0,ind=1;response[ind]!=null;i++){
+                   int ind=1;
+                    for(int i=0;response[ind]!=null;i++){
                         Client.Listname[i]=(String) response[ind++];
                         Client.result[i]=(int) response[ind++];
                         System.out.println(Client.Listname[i] + "  "+ Client.result[i]);
+                        
                     }
+                   final int track = ind/2; 
+                    
+                    Platform.runLater(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            
+                             playingScreen.loadScreen(Client.screen4ID, Client.screen4file);    //load the result screen
+                              playingScreen.setScreen(Client.screen4ID);
+                            
+                           
+                            ResultController.tempBoard.appendText("   Player Name    --------  points\n_____________________________________\n");
+                            
+                            for(int i=0;i<track;i++)
+                            {
+                                String s=""+(i+1)+" : "+Client.Listname[i]+"------->("+Client.result[i]+")\n\n";
+                                ResultController.tempBoard.appendText(s);
+                            }
+
+                        }
+
+                    });
+                    
+                    
                     
                 }
 
@@ -109,6 +136,12 @@ class EchoThread extends Thread {
                 validResponse = null;
 
                 System.out.println("Server Response : " + response[0] + "  " + response[1] + " " + response[2]);
+                
+                if(ConnectionSetupController.s1==null){
+                    din.close();
+                    dout.close();
+                    response=null;
+                }
 
                 response = (Object[]) din.readObject();
             }
@@ -163,8 +196,9 @@ class EchoThread extends Thread {
     }
 
     public void updateInfo(Object[] response) {
-
-        int index = 3;         //update from other client
+        
+        PlayingController.totalGridColored=(int) response[3];   //define how much grids have colored
+        int index = 4;         //update from other client
         for (int i = 0; i < PlayingController.maxRow; i++) {
             for (int j = 0; j < PlayingController.maxCol; j++) {
                 HomeController.playingGrid[i][j] = (int) response[index++];

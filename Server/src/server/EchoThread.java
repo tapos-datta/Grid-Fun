@@ -109,6 +109,7 @@ public class EchoThread extends Thread {
 //                    System.out.println(receive[0]+ " " +receive[1] + "  "+ receive[2]);
                 // dout.reset();
             } catch (IOException ex) {
+                k=0;
                 Logger.getLogger(EchoThread.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(EchoThread.class.getName()).log(Level.SEVERE, null, ex);

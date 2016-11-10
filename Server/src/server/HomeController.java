@@ -49,7 +49,7 @@ public class HomeController implements Initializable {
 
     public static int playerNumber;
     static final int PORT = 1978;
-    static final int Max = 100;
+    static final int Max = 5;
     public static String name[] = new String[5];
     ServerSocket serverSocket;
     Socket socket;
@@ -78,7 +78,7 @@ public class HomeController implements Initializable {
             protected Void call() throws Exception {
                 int i = 1;
                 playerNumber = 0;
-                while (i <= Max) {
+                while (i < Max) {
                     try {
 
                         socket = serverSocket.accept();

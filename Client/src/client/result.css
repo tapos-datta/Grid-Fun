@@ -1,0 +1,36 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+     -fx-background-image:url("result.jpg"); 
+    -fx-background-position:left bottom ;
+}
+
+#resultBoard{
+   
+    -fx-background-color:transparent;
+    
+}
+
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+    
+}
+
+
+.text-area .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+   -fx-border-color:derive(gray,80%);
+    -fx-background-radius: 2em;
+    -fx-border-radius:2em;
+}

@@ -139,8 +139,9 @@ public class PlayingController implements Initializable, ControlledScreen {
     public static boolean turn;
     public static int maxRow = 22;
     public static int maxCol = 19;
-    public static int colorCell=0;
+    
     public int totalCell;
+    public static int totalGridColored=0;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -319,6 +320,7 @@ public class PlayingController implements Initializable, ControlledScreen {
             point = point + ((coloring > 0) ? (coloring * 2 + randPoint) : 0);
             score.setText("" + point);
             System.out.println(coloring);
+            totalGridColored+=coloring;
             updateGrid();
         } 
         else if (HomeController.playingGrid[row][col] == 10 && turn == true) {
@@ -328,6 +330,7 @@ public class PlayingController implements Initializable, ControlledScreen {
             if (point < 0) {
                 point = 0;
             }
+            totalGridColored+=1;
             score.setText("" + point);
             updateGrid();
 
@@ -367,9 +370,11 @@ public class PlayingController implements Initializable, ControlledScreen {
     void updateGrid() {
 
         sendingUpdateInfo();
+        System.out.println("totalGridColored = "+totalGridColored);
+//        totalGridColored=totalCell;
 
         List<Information> temp = new ArrayList<Information>();
-        colorCell=0;
+     
         for (int i = 0; i < maxRow; i++) {
 
             Image[] image = new Image[20];
@@ -377,7 +382,7 @@ public class PlayingController implements Initializable, ControlledScreen {
                 try {
                     if (HomeController.playingGrid[i][j] == 0 || HomeController.playingGrid[i][j] == 10) {
                         image[j] = null;
-                        colorCell++;
+                      
                     } else if (HomeController.playingGrid[i][j] == 9) {
                         BufferedImage im = ImageIO.read(getClass().getClassLoader().getResource("ressources/blackcolor.png"));
                         image[j] = SwingFXUtils.toFXImage(im, null);
@@ -398,7 +403,7 @@ public class PlayingController implements Initializable, ControlledScreen {
         data = FXCollections.observableArrayList(list); // create the data
         table.setItems(data);
         
-        if(totalCell-colorCell==0){
+        if(totalCell-totalGridColored==0){
             playTerminate();
         }
         
@@ -411,7 +416,8 @@ public class PlayingController implements Initializable, ControlledScreen {
         send[0] = 4;
         send[1] = PlayerInfo.playerId;
         send[2]=point;
-        int k = 3;
+        send[3]=totalGridColored;
+        int k = 4;
         for (int i = 0; i < maxRow; i++) {
             for (int j = 0; j < maxCol; j++) {
                 send[k++] = HomeController.playingGrid[i][j];
@@ -445,6 +451,9 @@ public class PlayingController implements Initializable, ControlledScreen {
        Object[] send=new Object[3];
        send[0]=5;                       //operation id=5 for show all player point 
        
+      
+       
+       
        Task<Void> task = new Task<Void>() {
 
             @Override
@@ -462,7 +471,5 @@ public class PlayingController implements Initializable, ControlledScreen {
         Thread th = new Thread(task);
         th.setDaemon(true);
         th.start();
-        
     }
-
 }

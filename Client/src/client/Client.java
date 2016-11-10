@@ -17,13 +17,17 @@ import javafx.stage.Stage;
  * @author Tapos
  */
 public class Client extends Application {
-
+    
     public static String screen1file = "ConnectionSetup.fxml";
     public static String screen1ID = "Connection";
     public static String screen2file = "Home.fxml";
     public static String screen2ID = "Home";
     public static String screen3file = "Playing.fxml";
     public static String screen3ID = "playing";
+    public static String screen4file = "Result.fxml";
+    public static String screen4ID = "result";
+    public static String screen5file = "Help.fxml";
+    public static String screen5ID = "help";
     public static Stage primary;
     public static String[] imagefile = new String[5];
     

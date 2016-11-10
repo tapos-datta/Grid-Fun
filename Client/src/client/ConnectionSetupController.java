@@ -48,7 +48,7 @@ public class ConnectionSetupController implements Initializable, ControlledScree
     InetAddress address = null;
     public static ObjectOutputStream dout;
     public static ObjectInputStream din;
-    Socket s1 = null;
+    public static Socket s1 = null;
     public static int playerId;
     public static Button playRole = null;
     String line = null;
@@ -73,11 +73,17 @@ public class ConnectionSetupController implements Initializable, ControlledScree
             createConnection.setDisable(true);
 
         } catch (Exception ex) {
+//            Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + selection + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+//            alert.showAndWait();
+//
+//            if (alert.getResult() == ButtonType.YES) {
+//    //do stuff
+//            }
             System.out.println("sdjfhskdjf");
         }
 
     }
-    
+
 //    @FXML
 //    public void keyAction(ActionEvent e){
 //       if(playername.getText().length()>13){
@@ -87,11 +93,10 @@ public class ConnectionSetupController implements Initializable, ControlledScree
 //           playername.setText(playername.getText());
 //       }
 //    }
-
     @FXML
     public void enterAction(ActionEvent e) {
 
-        if (playername.equals("") == false) {
+        if (playername.equals("") == false && playername.getText().length()<=12) {
             try {
                 System.out.println("etotuk paichi ");
 
@@ -104,7 +109,7 @@ public class ConnectionSetupController implements Initializable, ControlledScree
                 dout.flush();
 
                 Thread.sleep(100);
-                
+
                 if (PlayerInfo.playerId != -1) {
                     myScreen.loadScreen(Client.screen2ID, Client.screen2file);
                     myScreen.setScreen(Client.screen2ID);
@@ -115,28 +120,12 @@ public class ConnectionSetupController implements Initializable, ControlledScree
             }
 
         } else {
+            
+            //create a pop up window
             System.out.println("please enter username");
         }
 
-//        Task<Void> task1 = new Task<Void>() {
-//
-//            @Override
-//            protected Void call() throws Exception {
-//
-//                System.out.println("ei porjonto aichi");
-//
-//                System.out.println("player " + playername.getText());
-//               
-//
-//                return null;
-//
-//            }
-//
-//        };
-//
-//        Thread th1 = new Thread(task1);
-//        th1.setDaemon(true);
-//        th1.start();
+
     }
 
     void process() {
