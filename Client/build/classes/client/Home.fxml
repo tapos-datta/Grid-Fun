@@ -21,6 +21,6 @@
       </Label>
       <Button id="common" fx:id="play" layoutX="292.0" layoutY="198.0" mnemonicParsing="false" onAction="#playAction" prefHeight="57.0" prefWidth="157.0" text="Play" />
       <Button id="common" fx:id="help" layoutX="294.0" layoutY="332.0" mnemonicParsing="false" onAction="#helpAction" prefHeight="57.0" prefWidth="157.0" text="Help" />
-      <Button id="common" fx:id="exit" layoutX="294.0" layoutY="464.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="57.0" prefWidth="157.0" text="Exit" />
+      <Button id="common" fx:id="exit" layoutX="294.0" layoutY="464.0" mnemonicParsing="false" onAction="#exitAction" prefHeight="57.0" prefWidth="157.0" text="Results" />
    </children>
 </AnchorPane>

@@ -5,7 +5,7 @@
  */
 package client;
 
-import common.CommunicateObject;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -26,6 +26,8 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
@@ -44,6 +46,8 @@ public class ConnectionSetupController implements Initializable, ControlledScree
     public TextField playername;
     @FXML
     public Button play;
+    @FXML 
+    public TextField ipAddress;
 
     InetAddress address = null;
     public static ObjectOutputStream dout;
@@ -55,16 +59,18 @@ public class ConnectionSetupController implements Initializable, ControlledScree
     BufferedReader br = null;
     BufferedReader is = null;
     PrintWriter os = null;
-    CommunicateObject send = null;
-    ScreenController myScreen = null;
+    
+    public static ScreenController communicateScreen = null;
 
     @FXML
     public void connectAction(ActionEvent e) {
+        
         try {
-            InetAddress address = InetAddress.getLocalHost();
-            s1 = new Socket(address, 1978); // You can use static final constant PORT_NUM
+            InetAddress address =InetAddress.getByName(ipAddress.getText());
+            //System.out.println(InetAddress.getLocalHost().getHostAddress());
+            s1 = new Socket(address, 44567); // You can use static final constant PORT_NUM
             dout = new ObjectOutputStream(s1.getOutputStream());     // data sending mood active 
-            System.out.println("pailam nani ");
+            //System.out.println("pailam nani ");
 
             new EchoThread(s1).start();
 
@@ -73,32 +79,24 @@ public class ConnectionSetupController implements Initializable, ControlledScree
             createConnection.setDisable(true);
 
         } catch (Exception ex) {
-//            Alert alert = new Alert(AlertType.CONFIRMATION, "Delete " + selection + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-//            alert.showAndWait();
-//
-//            if (alert.getResult() == ButtonType.YES) {
-//    //do stuff
-//            }
-            System.out.println("sdjfhskdjf");
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText("Server is not found.");
+            alert.setContentText("Run server first and give correct IP of server");
+            alert.showAndWait();
+
         }
 
     }
 
-//    @FXML
-//    public void keyAction(ActionEvent e){
-//       if(playername.getText().length()>13){
-//          playername.setText(playername.getText().substring(0, 12));
-//       }
-//       else{
-//           playername.setText(playername.getText());
-//       }
-//    }
+
     @FXML
     public void enterAction(ActionEvent e) {
 
-        if (playername.equals("") == false && playername.getText().length()<=12) {
+        if (playername.getText().equals("") == false && playername.getText().length() <= 12) {
             try {
-                System.out.println("etotuk paichi ");
+              //  System.out.println("etotuk paichi ");
 
                 Object[] obj = new Object[4];
                 obj[0] = 1;
@@ -109,53 +107,36 @@ public class ConnectionSetupController implements Initializable, ControlledScree
                 dout.flush();
 
                 Thread.sleep(100);
+                dout.reset();
 
                 if (PlayerInfo.playerId != -1) {
-                    myScreen.loadScreen(Client.screen2ID, Client.screen2file);
-                    myScreen.setScreen(Client.screen2ID);
+                   communicateScreen.loadScreen(Client.screen2ID, Client.screen2file);
+                    communicateScreen.setScreen(Client.screen2ID);
                 }
 
             } catch (Exception ex) {
-                ex.printStackTrace();
+                
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText(null);
+                alert.setContentText("You are not connected with server.");
+
+                alert.showAndWait();
             }
 
         } else {
-            
-            //create a pop up window
-            System.out.println("please enter username");
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Username must have 1-12 Characters");
+            alert.setContentText("Careful with the next step!");
+
+            alert.showAndWait();
+
         }
 
-
     }
 
-    void process() {
 
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run() {
-                System.out.println("thread running");
-                while (true) {
-                    try {
-                        Object[] receive = (Object[]) din.readObject();
-
-                        if ((int) receive[0] == 1) {
-
-                            System.out.println("Player id : " + receive[1]);
-                            System.out.println("Player name : " + receive[2]);
-
-                        }
-                    } catch (IOException ex) {
-                        Logger.getLogger(ConnectionSetupController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(ConnectionSetupController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-
-            }
-        });
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -168,7 +149,7 @@ public class ConnectionSetupController implements Initializable, ControlledScree
     @FXML
     public void playAction(ActionEvent e) {
         try {
-            System.out.println("etotuk paichi thread numbering ");
+//            System.out.println("etotuk paichi thread numbering ");
 
             Object[] obj = new Object[4];
             obj[0] = 2;
@@ -177,6 +158,7 @@ public class ConnectionSetupController implements Initializable, ControlledScree
 
             dout.writeObject(obj);
             dout.flush();
+            dout.reset();
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -186,7 +168,7 @@ public class ConnectionSetupController implements Initializable, ControlledScree
 
     @Override
     public void setScreenParent(ScreenController screenPage) {
-        myScreen = screenPage;
+        communicateScreen = screenPage;
     }
 
 }

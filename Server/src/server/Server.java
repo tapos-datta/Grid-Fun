@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -27,6 +28,10 @@ public class Server extends Application {
        Parent root = FXMLLoader.load(getClass().getResource("Home.fxml"));
         
         Scene scene = new Scene(root);
+         primaryStage.setTitle("Server");
+        primaryStage.setResizable(false);
+         Image icon = new Image(getClass().getResourceAsStream("S1-icon.png"));
+        primaryStage.getIcons().add(icon);
         
         primaryStage.setScene(scene);
         primaryStage.show();

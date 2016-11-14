@@ -7,6 +7,7 @@ package client;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -38,6 +39,12 @@ public class ResultController implements Initializable,ControlledScreen {
         resultBoard.setEditable(false);
         
     } 
+    
+    @FXML
+    public void bacAction(ActionEvent e){
+        
+        resultScreen.setScreen(Client.screen2ID);
+    }
     
     
 

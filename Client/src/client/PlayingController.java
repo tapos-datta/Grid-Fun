@@ -5,6 +5,7 @@
  */
 package client;
 
+import static client.HomeController.homeScreen;
 import com.sun.javafx.geom.BaseBounds;
 import com.sun.javafx.geom.transform.BaseTransform;
 import com.sun.javafx.jmx.MXNodeAlgorithm;
@@ -26,6 +27,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.InflaterInputStream;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -36,6 +38,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.IndexedCell;
@@ -74,7 +78,7 @@ public class PlayingController implements Initializable, ControlledScreen {
     /**
      * Initializes the controller class.
      */
-    public static ScreenController playingScreen;
+    public static ScreenController playingScreen = null;
     @FXML
     private Label state;
     @FXML
@@ -132,6 +136,7 @@ public class PlayingController implements Initializable, ControlledScreen {
 
     public static ObservableList<Information> data;
     public static TableView<Information> tempTable;
+    public  List<Information> temp = new ArrayList<Information>();
 
     public static List<Information> list = new ArrayList<>();
     private Button PlayAction = new Button();
@@ -140,15 +145,32 @@ public class PlayingController implements Initializable, ControlledScreen {
     public static int maxRow = 22;
     public static int maxCol = 19;
     
+
     public int totalCell;
-    public static int totalGridColored=0;
+    public static int totalGridColored = 0;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        totalCell=maxRow*maxCol;
+        totalCell = maxRow * maxCol;
         stateSatus = state;
         createGrid();
         tempTable = table;
+    }
+    @FXML
+    public void showAction(ActionEvent e){
+        
+         try {
+            Object[] send = new Object[3];
+            send[0] = 10;                       //operation id=5 for show all player point
+            
+            ConnectionSetupController.dout.writeObject(send);
+            ConnectionSetupController.dout.flush();
+             ConnectionSetupController.dout.reset();
+        } catch (IOException ex) {
+           // Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     public void tableSettings() {
@@ -246,6 +268,8 @@ public class PlayingController implements Initializable, ControlledScreen {
 
         data = FXCollections.observableArrayList(list); // create the data
         table.setItems(data);
+       
+        
 
         table.getSelectionModel().setCellSelectionEnabled(true);
 
@@ -254,7 +278,7 @@ public class PlayingController implements Initializable, ControlledScreen {
             @Override
             public void onChanged(Change change) {
                 for (TablePosition pos : selectedCells) {
-                    System.out.println("Cell selected in row " + pos.getRow() + " and column " + pos.getColumn());
+//                    System.out.println("Cell selected in row " + pos.getRow() + " and column " + pos.getColumn());
                     row = pos.getRow();
                     col = pos.getColumn();
                     trigger.fire();
@@ -283,7 +307,7 @@ public class PlayingController implements Initializable, ControlledScreen {
         trigger.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                System.out.println(" row = " + row + " col " + col);
+//                System.out.println(" row = " + row + " col " + col);
                 operation();
             }
         });
@@ -314,23 +338,22 @@ public class PlayingController implements Initializable, ControlledScreen {
             randPoint = rand.nextInt((5 - 1) + 1) + 1;
             counter = randPoint;
 
-            System.out.println(randPoint);
+//            System.out.println(randPoint);
             coloring = 0;
             dfs(row, col);
             point = point + ((coloring > 0) ? (coloring * 2 + randPoint) : 0);
             score.setText("" + point);
-            System.out.println(coloring);
-            totalGridColored+=coloring;
+//            System.out.println(coloring);
+            totalGridColored += coloring;
             updateGrid();
-        } 
-        else if (HomeController.playingGrid[row][col] == 10 && turn == true) {
+        } else if (HomeController.playingGrid[row][col] == 10 && turn == true) {
             HomeController.playingGrid[row][col] = 9;                //  for coloring boom 
             point = point - 5;
 
             if (point < 0) {
                 point = 0;
             }
-            totalGridColored+=1;
+            totalGridColored += 1;
             score.setText("" + point);
             updateGrid();
 
@@ -345,7 +368,7 @@ public class PlayingController implements Initializable, ControlledScreen {
 
     void dfs(int r, int c) {
 
-        System.out.println(" r " + r + " c " + c + " grid " + HomeController.playingGrid[r][c] + " point " + point);
+//        System.out.println(" r " + r + " c " + c + " grid " + HomeController.playingGrid[r][c] + " point " + point);
 
         if ((HomeController.playingGrid[r][c] == 0 || HomeController.playingGrid[r - 1][c] == 10) && counter != 0) {
             HomeController.playingGrid[r][c] = PlayerInfo.playerId;
@@ -370,11 +393,11 @@ public class PlayingController implements Initializable, ControlledScreen {
     void updateGrid() {
 
         sendingUpdateInfo();
-        System.out.println("totalGridColored = "+totalGridColored);
+//        System.out.println("totalGridColored = " + totalGridColored);
 //        totalGridColored=totalCell;
 
-        List<Information> temp = new ArrayList<Information>();
-     
+       
+        temp.clear();
         for (int i = 0; i < maxRow; i++) {
 
             Image[] image = new Image[20];
@@ -382,7 +405,7 @@ public class PlayingController implements Initializable, ControlledScreen {
                 try {
                     if (HomeController.playingGrid[i][j] == 0 || HomeController.playingGrid[i][j] == 10) {
                         image[j] = null;
-                      
+
                     } else if (HomeController.playingGrid[i][j] == 9) {
                         BufferedImage im = ImageIO.read(getClass().getClassLoader().getResource("ressources/blackcolor.png"));
                         image[j] = SwingFXUtils.toFXImage(im, null);
@@ -392,6 +415,8 @@ public class PlayingController implements Initializable, ControlledScreen {
                         image[j] = SwingFXUtils.toFXImage(im, null);
                     }
                 } catch (IOException ex) {
+                    System.out.println("tuktak takatasdfksladfk");
+
                     Logger.getLogger(PlayingController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -399,41 +424,61 @@ public class PlayingController implements Initializable, ControlledScreen {
             temp.add(info);
         }
 
-        list = temp;
-        data = FXCollections.observableArrayList(list); // create the data
-        table.setItems(data);
-        
-        if(totalCell-totalGridColored==0){
+       // System.out.println("temp e somosssa\n");
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                list=temp;
+                data = FXCollections.observableArrayList(list); // create the data
+                table.setItems(data);
+            }
+
+        });
+
+        if (totalCell - totalGridColored == 0) {
             playTerminate();
         }
-        
+
     }
 
     void sendingUpdateInfo() {
 
-        Object[] send = new Object[425];
+        Object[] senddata = new Object[425];
 
-        send[0] = 4;
-        send[1] = PlayerInfo.playerId;
-        send[2]=point;
-        send[3]=totalGridColored;
+        senddata[0] = 4;
+        senddata[1] = PlayerInfo.playerId;
+        senddata[2] = point;
+        senddata[3] = totalGridColored;
         int k = 4;
         for (int i = 0; i < maxRow; i++) {
             for (int j = 0; j < maxCol; j++) {
-                send[k++] = HomeController.playingGrid[i][j];
+                senddata[k++] = HomeController.playingGrid[i][j];
             }
         }
-
+        final Object[] send=senddata;
+        senddata=null;
         Task<Void> task = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
 
-                ConnectionSetupController.dout.writeObject(send);
-                ConnectionSetupController.dout.flush();
-                PlayingController.turn = false;
-                PlayingController.stateSatus.setStyle("-fx-background-color: red;");
+                if (ConnectionSetupController.dout == null) {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Information");
+                    alert.setHeaderText(null);
+                    alert.setContentText("You are not connected with server");
 
+                    alert.showAndWait();
+
+                } else {
+
+                    ConnectionSetupController.dout.writeObject(send);
+                    ConnectionSetupController.dout.flush();
+                    
+                    PlayingController.turn = false;
+                    PlayingController.stateSatus.setStyle("-fx-background-color: red;");
+                }
                 return null;
 
             }
@@ -445,23 +490,21 @@ public class PlayingController implements Initializable, ControlledScreen {
         th.start();
 
     }
-    
-    public void playTerminate(){
-        
-       Object[] send=new Object[3];
-       send[0]=5;                       //operation id=5 for show all player point 
-       
-      
-       
-       
-       Task<Void> task = new Task<Void>() {
+
+    public void playTerminate() {
+
+        Object[] send = new Object[3];
+        send[0] = 5;                       //operation id=5 for show all player point 
+
+        Task<Void> task = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
 
                 ConnectionSetupController.dout.writeObject(send);
                 ConnectionSetupController.dout.flush();
-               
+                 ConnectionSetupController.dout.reset();
+
                 return null;
 
             }

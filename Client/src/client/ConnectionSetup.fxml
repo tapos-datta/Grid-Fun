@@ -9,7 +9,7 @@
 
 <AnchorPane id="outer" prefHeight="630.0" prefWidth="803.0" stylesheets="@connection.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.ConnectionSetupController">
    <children>
-      <Button id="connectionButton" fx:id="createConnection" alignment="CENTER" layoutX="528.0" layoutY="207.0" mnemonicParsing="false" onAction="#connectAction" prefHeight="49.0" prefWidth="210.0" text="Create Connection">
+      <Button id="connectionButton" fx:id="createConnection" alignment="CENTER" layoutX="528.0" layoutY="247.0" mnemonicParsing="false" onAction="#connectAction" prefHeight="49.0" prefWidth="210.0" text="Create Connection">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
@@ -19,7 +19,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Button>
-      <TextField id="name" fx:id="playername" layoutX="528.0" layoutY="290.0" prefHeight="36.0" prefWidth="210.0" promptText="Player Name">
+      <TextField id="name" fx:id="playername" layoutX="528.0" layoutY="313.0" prefHeight="36.0" prefWidth="210.0" promptText="Player Name">
          <font>
             <Font size="14.0" />
          </font>
@@ -39,5 +39,10 @@
                </font>
             </Label>
          </children></AnchorPane>
+      <TextField id="name" fx:id="ipAddress" layoutX="528.0" layoutY="193.0" prefHeight="36.0" prefWidth="210.0" promptText="IP Address">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
    </children>
 </AnchorPane>

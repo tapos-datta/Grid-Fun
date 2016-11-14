@@ -18,10 +18,11 @@
             <Font name="System Bold Italic" size="34.0" />
          </font>
       </TextArea>
-      <Label fx:id="resultLabel" alignment="CENTER" layoutX="312.0" layoutY="39.0" prefHeight="43.0" prefWidth="167.0" text="Results" textFill="#a82f2f">
+      <Label fx:id="resultLabel" alignment="CENTER" layoutX="303.0" layoutY="22.0" prefHeight="43.0" prefWidth="167.0" text="Results" textFill="#a82f2f">
          <font>
             <Font name="System Bold Italic" size="48.0" />
          </font>
       </Label>
+      <Button id="common" layoutX="14.0" layoutY="557.0" mnemonicParsing="false" onAction="#bacAction" prefHeight="49.0" prefWidth="115.0" stylesheets="@result.css" text="previous" textFill="#eeeff2" />
    </children>
 </AnchorPane>

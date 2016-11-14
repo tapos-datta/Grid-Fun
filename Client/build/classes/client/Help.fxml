@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="647.0" prefWidth="775.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.HelpController">
+<AnchorPane id="AnchorPane" prefHeight="646.0" prefWidth="773.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.HelpController">
     <stylesheets>
         <URL value="@help.css" />
     </stylesheets>
@@ -18,5 +18,6 @@
             <Font name="System Italic" size="21.0" />
          </font>
       </TextArea>
+      <Button id="common" layoutX="29.0" layoutY="561.0" mnemonicParsing="false" onAction="#backAction" prefHeight="38.0" prefWidth="84.0" stylesheets="@help.css" text="previous" />
    </children>
 </AnchorPane>

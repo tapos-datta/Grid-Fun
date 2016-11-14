@@ -3,8 +3,8 @@
  */
 
 .mainFxmlClass {
-     -fx-background-image:url("result.jpg"); 
-    -fx-background-position:left bottom ;
+     -fx-background-image:url("help.jpg"); 
+    -fx-background-position:right  ;
 }
 
 #resultBoard{
@@ -33,4 +33,21 @@
    -fx-border-color:derive(gray,80%);
     -fx-background-radius: 2em;
     -fx-border-radius:2em;
+}
+
+#common{
+     -fx-padding: 10 10 10 10;
+   // -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
+    -fx-background-radius: 25;
+     -fx-cursor:hand;
+    //-fx-background-color:#ffffff;
+    -fx-font-weight: bold;
+    -fx-font-size: 1.4em;
+   
+    -fx-background-color:transparent;
+       //-fx-background-radius: 8;
+
+    //-fx-background-color:transparent ;
+    -fx-border-color:black;
+    -fx-border-radius:18;
 }

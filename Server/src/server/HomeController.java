@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -48,8 +49,9 @@ public class HomeController implements Initializable {
     public TextArea console;
 
     public static int playerNumber;
-    static final int PORT = 1978;
+    static final int PORT = 44567;
     static final int Max = 5;
+    static boolean alive[] = new boolean[5];
     public static String name[] = new String[5];
     ServerSocket serverSocket;
     Socket socket;
@@ -64,13 +66,14 @@ public class HomeController implements Initializable {
     public void runAction(ActionEvent e) {
         run.setDisable(true);
         stop.setDisable(false);
+
         try {
-            serverSocket = new ServerSocket(PORT);
+            serverSocket = new ServerSocket(PORT,50, InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()));
         } catch (IOException ex) {
             ex.printStackTrace();
 
         }
-        console.appendText("Server is running... \n");
+        console.appendText("Server is running... \nServer IP Address: "+serverSocket.getInetAddress()+"\n");
 
         Task<Void> task = new Task<Void>() {
 
@@ -78,12 +81,12 @@ public class HomeController implements Initializable {
             protected Void call() throws Exception {
                 int i = 1;
                 playerNumber = 0;
-                while (i < Max) {
+                while (i < Max && serverSocket != null) {
                     try {
 
                         socket = serverSocket.accept();
-                        
-                        if(noMorePlayer == true){
+
+                        if (noMorePlayer == true) {
                             socket.close();
                             break;
                         }
@@ -97,17 +100,20 @@ public class HomeController implements Initializable {
                             }
 
                         });
+                        if (socket != null) {
+                            alive[i]=true;
+                            EchoThread client = new EchoThread(socket, i);
+                            client.start();
+                            clients.add(client);
+                        }
 
                     } catch (IOException ex) {
-                        System.out.println("I/O error: " + ex);
+//                        System.out.println("I/O error: " + ex);
                     }
                     // new thread for a client
-                    EchoThread client = new EchoThread(socket, i);
-                    client.start();
-                    clients.add(client);
+
                     i++;
                 }
-                
 
                 return null;
 
@@ -124,33 +130,24 @@ public class HomeController implements Initializable {
     @FXML
     public void stopAction(ActionEvent e) {
 
-//        try {
-            
-            // not working
-//            for (EchoThread t : clients) {
-//                try {
-//                    if (t.socket != null) {
-//                        System.out.println(t.socket);
-//                        t.socket.close();
-//                        System.out.println(t.socket);
-//                    }
-//                } catch (Exception ex1) {
-//                    
-//                    //  Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex1);
-//                }
-//            }
-//            try {
-//                serverSocket.close();
-//            } catch (IOException ex) {
-//                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//            din.close();
-//            dout.close();
-//            run.setDisable(false);
-//            
-//        } catch (IOException ex) {
-//            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            Object[] message = new Object[2];
+            message[0] = 6;      //send Closeing signal
+
+            for (EchoThread t : clients) {
+                t.updateMessage(message);
+                t.stopMonitoring();
+            }
+            serverSocket.close();
+            serverSocket = null;
+            clients.clear();
+            console.appendText("Running server is stopped......" + "\n");
+            run.setDisable(false);
+            stop.setDisable(true);
+
+        } catch (IOException ex) {
+            // Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
